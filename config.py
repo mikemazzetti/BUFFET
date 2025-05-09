@@ -7,19 +7,19 @@ load_dotenv()
 # Reddit API Credentials
 redditClientId = os.getenv('redditId')
 redditClientSecret = os.getenv('redditSecret')
-redditUserAgent = os.getenv('redditAgent', 'BuffetTrader_v0.1 by MikeMazzetti')
+redditUserAgent = os.getenv('redditAgent')
 
 # PostgreSQL Database Credentials
-dbName = os.getenv('dbName', 'buffet_db')
+dbName = os.getenv('dbName')
 dbUser = os.getenv('dbUser')
 dbPassword = os.getenv('dbPass')
-dbHost = os.getenv('dbHost', 'localhost')
-dbPort = os.getenv('dbPort', '5432')
+dbHost = os.getenv('dbHost')
+dbPort = os.getenv('dbPort')
 
 # Interactive Brokers (IBKR) Credentials
-ibkrHost = os.getenv('ibHost', '127.0.0.1')
-ibkrPort = int(os.getenv('ibPort', '7497'))
-ibkrClientId = int(os.getenv('ibId', '1'))
+ibkrHost = os.getenv('ibHost')
+ibkrPort = int(os.getenv('ibPort'))
+ibkrClientId = int(os.getenv('ibId'))
 
 # TRADING PARAMETERS 
 targetSubreddits = ['wallstreetbets']  # subreddits

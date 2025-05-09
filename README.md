@@ -29,48 +29,30 @@ cd reddit-stock-sentiment
 pip install -r requirements.txt
 ```
 
-3. Create a `.env` file in the root directory with your credentials:
+3. Set up PostgreSQL database locally.
+
+4. Register with Interactive Brokers (IBKR) and the Reddit Apps API
+
+5. Create a `.env` file in the root directory with your credentials:
 ```bash
-# Reddit API Credentials
-redditId=your_reddit_client_id
-redditSecret=your_reddit_client_secret
-redditAgent=BUFFET by MikeMazzetti
+# Reddit API 
+redditId= # reddit client ID
+redditSecret= # reddit client Secret
+redditAgent= # reddit user Agent
 
-# PostgreSQL Database Credentials
-dbName=buffet_db
-dbUser=your_db_username
-dbPass=your_db_password
-dbHost=localhost
-dbPort=5432
+# Database 
+dbName= # name of database
+dbUser= # username
+dbPass= # db password
+dbHost= # host
+dbPort= # port
 
-# Interactive Brokers (IBKR) Credentials
-ibHost=127.0.0.1
-ibPort=7497  # 7497 for paper trading, 7496 for live
-ibId=1
+# Interactive Brokers (IBKR) 
+ibHost= #host IP
+ibPort= # 7497 for paper trading, 7496 for live
+ibId= # IBKR user ID
 ```
 
-4. Set up PostgreSQL database locally.
-
-Note: The `.env` file is ignored by Git for security. Never commit your actual credentials to version control.
-
-## Environment Variables Explained
-
-- Reddit Credentials:
-  - `redditId`: Your Reddit API client ID from https://old.reddit.com/prefs/apps
-  - `redditSecret`: Your Reddit API client secret
-  - `redditAgent`: User agent string for Reddit API
-
-- PostgreSQL Credentials:
-  - `dbName`: Database name (default: buffet_db)
-  - `dbUser`: Your PostgreSQL username
-  - `dbPass`: Your PostgreSQL password
-  - `dbHost`: Database host (default: localhost)
-  - `dbPort`: Database port (default: 5432)
-
-- IBKR Credentials:
-  - `ibHost`: IBKR TWS/Gateway host (default: 127.0.0.1)
-  - `ibPort`: IBKR port (7497 for paper trading, 7496 for live)
-  - `ibId`: IBKR client ID (default: 1)
 
 ## Usage
 
