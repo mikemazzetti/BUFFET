@@ -4,18 +4,17 @@ A Python program that analyzes Reddit comments for stock sentiment and suggests 
 
 ## Features
 
-- Scrapes Reddit comments from specified subreddits
-- Analyzes sentiment using VADER sentiment analysis
-- Stores data in PostgreSQL database
-- Makes trading decisions based on sentiment scores
-- Execute trades via Interactive Brokers (IBKR)
+- Built an NLP-Powered stock trader using Python, to determine stock sentiment from Reddit, and make investments 
+- Uses PRAW for scraping reddit comments into a PostgreSQL database, with VADER applied for sentiment scoring of stock
+- Utilized IBKR’s API to make automated daily trades based on levered sentiment scores and individual historical ticker prices 
+
 
 ## Requirements
 
-- Python 3.7+
-- PostgreSQL database
-- Reddit API credentials
-- Interactive Brokers account and TWS/Gateway
+- Python 3.7+ would be needed
+- PostgreSQL database would need to be setup locally
+- Reddit API credentials, can be set up here https://old.reddit.com/prefs/apps
+- Interactive Brokers account and TWS/Gateway credentials, IKBR account needed to run. https://www.interactivebrokers.ca/en/home.php
 
 ## Installation
 
@@ -30,9 +29,9 @@ cd reddit-stock-sentiment
 pip install -r requirements.txt
 ```
 
-3. Fill out config.py file with your credentials 
+3. Fill out config.py file with your credentials, and additional parameters for reddit comment scraping.
 
-4. Set up PostgreSQL database
+4. Set up PostgreSQL database locally.
 
 
 ## Usage
@@ -45,10 +44,10 @@ python main.py
 
 ## Safety Features
 
-- Trading is disabled by default
-- Set execute_trades_flag = True in main.py to enable trading
-- Recommended to test with paper trading account first
+- Trading is disabled by default, only simulated.
+- Set execute_trades_flag = True in main.py to enable real trading
+- I would highly recommended to test with a paper trading account first if used, I am not responsible for money lost.
 
 ## License
 
-MIT License - see LICENSE file for details
+MIT License 
