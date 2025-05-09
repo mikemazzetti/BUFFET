@@ -3,62 +3,57 @@ import config
 import re
 from database_manager import insert_comment
 
-def get_reddit_instance():
-    # Initializes and returns a PRAW instance.
+def getReddit():
     try:
         reddit = praw.Reddit(
-            client_id=config.REDDIT_CLIENT_ID,
-            client_secret=config.REDDIT_CLIENT_SECRET,
-            user_agent=config.REDDIT_USER_AGENT
+            client_id=config.redditClientId,
+            client_secret=config.redditClientSecret,
+            user_agent=config.redditUserAgent
         )
-        print(f"PRAW Reddit instance created. Read-only: {reddit.read_only}")
+        print(f"Reddit ready. Read-only: {reddit.read_only}")
         return reddit
     except Exception as e:
-        print(f"Error creating PRAW Reddit instance: {e}")
+        print(f"Reddit initialization error: {e}")
         return None
 
-def extract_stock_symbols(text):
-    # Extracts stock symbols from text.
-    # Simple regex for cashtags or common uppercase tickers
-    symbols = set(re.findall(r"(?:^|\s)(\$[A-Z]{1,5}\b|[A-Z]{2,5}\b)(?=\s|,|\.|$)", text))
-    # Remove the '$' if present, or keep it if preferred
-    return [s.replace('$', '').upper() for s in symbols if s.upper() in config.STOCK_KEYWORDS or s.replace('$', '').upper() in config.STOCK_KEYWORDS]
+def getSymbols(text):
+    syms = set(re.findall(r"(?:^|\s)(\$[A-Z]{1,5}\b|[A-Z]{2,5}\b)(?=\s|,|\.|$)", text))
+    return [s.replace('$', '').upper() for s in syms if s.upper() in config.stockKeywords or s.replace('$', '').upper() in config.stockKeywords]
 
-
-def scrape_subreddits(reddit, subreddits, keywords, limit_per_subreddit=100):
-    # Scrapes comments from specified subreddits for given keywords.
+def scrapeReddit(reddit, subs, keys, limit=100):
     if not reddit:
-        print("Reddit instance not available.")
+        print("No Reddit instance.")
         return
 
-    comments_scraped_count = 0
-    for sub_name in subreddits:
+    count = 0
+    for sub in subs:
         try:
-            print(f"Scraping subreddit: r/{sub_name}")
-            subreddit = reddit.subreddit(sub_name)
-            # Iterate through new comments. Can also use submissions and their comments.
-            for comment in subreddit.comments(limit=limit_per_subreddit + 50): # Fetch bit more to filter
-                # Basic keyword filtering 
-                comment_body_lower = comment.body.lower()
-                mentioned_keywords = extract_stock_symbols(comment.body) # Extract relevant stock symbols
+            print(f"Scraping r/{sub}")
+            subreddit = reddit.subreddit(sub)
+            for com in subreddit.comments(limit=limit + 50):
+                body = com.body.lower()
+                syms = getSymbols(com.body)
 
-                if any(keyword.lower().replace('$', '') in comment_body_lower for keyword in keywords) or mentioned_keywords:
-                    comment_data = {
-                        'id': comment.id,
-                        'subreddit': sub_name,
-                        'author': comment.author.name if comment.author else '[deleted]',
-                        'body': comment.body,
-                        'created_utc': comment.created_utc,
-                        'permalink': f"https://reddit.com{comment.permalink}",
-                        'stock_symbols': mentioned_keywords
+                if any(k.lower().replace('$', '') in body for k in keys) or syms:
+                    data = {
+                        'id': com.id,
+                        'subreddit': sub,
+                        'author': com.author.name if com.author else '[deleted]',
+                        'body': com.body,
+                        'created_utc': com.created_utc,
+                        'permalink': f"https://reddit.com{com.permalink}",
+                        'stock_symbols': syms
                     }
-                    if insert_comment(comment_data):
-                        comments_scraped_count += 1
-                    if comments_scraped_count >= limit_per_subreddit: 
+                    if insert_comment(data):
+                        count += 1
+                    if count >= limit: 
                         break
-            print(f"Finished r/{sub_name}. Scraped {comments_scraped_count} relevant comments so far.")
+            print(f"Done r/{sub}. Found {count} comments.")
         except praw.exceptions.PRAWException as e:
-            print(f"PRAW error scraping r/{sub_name}: {e}")
+            print(f"PRAW error in r/{sub}: {e}")
         except Exception as e:
-            print(f"General error scraping r/{sub_name}: {e}")
-    print(f"Total relevant comments scraped and attempted to insert: {comments_scraped_count}")
+            print(f"Error in r/{sub}: {e}")
+    print(f"Total comments found: {count}")
+
+def filterStockSymbols(syms):
+    return [s.replace('$', '').upper() for s in syms if s.upper() in config.stockKeywords or s.replace('$', '').upper() in config.stockKeywords]

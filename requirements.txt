@@ -1,5 +1,5 @@
-praw==7.7.1  # Reddit API wrapper
-psycopg2-binary==2.9.9  # PostgreSQL database adapter
-vaderSentiment==3.3.2  # For sentiment analysis
-schedule==1.2.1  # For scheduling regular runs
-ibapi  # Official IBKR API client
+praw
+psycopg2-binary
+vaderSentiment
+schedule
+ibapi  
