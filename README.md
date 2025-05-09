@@ -65,7 +65,7 @@ python main.py
 ## Safety Features
 
 - Trading is disabled by default, only simulated.
-- Set execute_trades_flag = True in main.py to enable real trading
+- Set execTrades = True in main.py to enable real trading
 - I would highly recommended to test with a paper trading account first if used, I am not responsible for money lost.
 
 ## License
