@@ -1,27 +1,23 @@
 from dotenv import load_dotenv
 import os
 
-# Load environment variables from .env file
 load_dotenv()
 
-# Reddit API Credentials
 redditClientId = os.getenv('redditId')
 redditClientSecret = os.getenv('redditSecret')
 redditUserAgent = os.getenv('redditAgent')
 
-# PostgreSQL Database Credentials
 dbName = os.getenv('dbName')
 dbUser = os.getenv('dbUser')
 dbPassword = os.getenv('dbPass')
 dbHost = os.getenv('dbHost')
 dbPort = os.getenv('dbPort')
 
-# Interactive Brokers (IBKR) Credentials
 ibkrHost = os.getenv('ibHost')
 ibkrPort = int(os.getenv('ibPort'))
 ibkrClientId = int(os.getenv('ibId'))
 
-# TRADING PARAMETERS 
+# PRAW PARAMETERS
 targetSubreddits = ['wallstreetbets']  # subreddits
 targetUsers = ['INSERT_USER']  # to track user posts
 stockKeywords = ['AAPL', 'TSLA', 'GME', 'AMC']  # Tickers looking for, add your own
