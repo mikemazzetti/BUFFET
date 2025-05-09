@@ -7,9 +7,7 @@ import ibkr_trader
 import time
 
 def dailyRoutine():
-    print("------------------------------------")
     print(f"Starting daily routine at {time.strftime('%Y-%m-%d %H:%M:%S')}")
-    print("------------------------------------")
 
     print("\n[PHASE 1: Initializing Database]")
     database_manager.initDb()
@@ -53,11 +51,9 @@ def dailyRoutine():
         else:
             print("No trades to execute.")
     else:
-        print("Trading is DISABLED. Set execTrades = True to enable")
+        print("Trading is DISABLED. Only paper trades active.Set execTrades = True to enable")
 
-    print("------------------------------------")
     print(f"Daily routine finished at {time.strftime('%Y-%m-%d %H:%M:%S')}")
-    print("------------------------------------")
 
 if __name__ == "__main__":
     dailyRoutine()
